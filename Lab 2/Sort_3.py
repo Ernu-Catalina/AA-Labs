@@ -45,9 +45,9 @@ for i, lst in enumerate(lists):
     print(f"Sorted List {i+1}: {lst}")
 
 # Plot execution times on a graph
-plt.plot([len(lst) for lst in lists], execution_times, marker='o')
-plt.title('Heapsort Execution Time for Various List Lengths')
-plt.xlabel('List Length')
+plt.plot(range(1, 11), execution_times, marker='o')
+plt.title('Heapsort Execution Time for Various Lists')
+plt.xlabel('List Number')
 plt.ylabel('Execution Time (seconds)')
 plt.grid(True)
 plt.show()

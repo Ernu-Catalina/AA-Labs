@@ -1,38 +1,28 @@
-#cocktail_sort
+#bucket_sort
 
 import time
 import matplotlib.pyplot as plt
 from List_generation import *
 
 
-def cocktail_sort(arr):
-    n = len(arr)
-    swapped = True
-    start = 0
-    end = n - 1
+def bucket_sort(arr):
+    # Find maximum and minimum values in the array
+    max_val, min_val = max(arr), min(arr)
+    range_val = max_val - min_val + 1
 
-    while swapped:
-        swapped = False
+    range_val = int(range_val)
+    buckets = [[] for _ in range(range_val)]
 
-        # Forward pass
-        for i in range(start, end):
-            if arr[i] > arr[i + 1]:
-                arr[i], arr[i + 1] = arr[i + 1], arr[i]
-                swapped = True
+    # Fill buckets
+    for num in arr:
+        buckets[int(num - min_val)].append(num)
 
-        if not swapped:
-            break
+    # Concatenate buckets
+    sorted_arr = []
+    for bucket in buckets:
+        sorted_arr.extend(bucket)
 
-        swapped = False
-        end -= 1
-
-        # Backward pass
-        for i in range(end - 1, start - 1, -1):
-            if arr[i] > arr[i + 1]:
-                arr[i], arr[i + 1] = arr[i + 1], arr[i]
-                swapped = True
-
-        start += 1
+    return sorted_arr
 
 
 # Measure execution time and perform cocktail sort on each list
@@ -41,16 +31,16 @@ execution_times = []
 
 for i, lst in enumerate(lists):
     start_time = time.time()
-    cocktail_sort(lst)
+    bucket_sort(lst)
     end_time = time.time()
     execution_times.append(end_time - start_time)
 
     print(f"Sorted List {i+1}: {lst}")
 
 # Plot execution times on a graph
-plt.plot([len(lst) for lst in lists], execution_times, marker='o')
-plt.title('Cocktail Shaker Sort Execution Time for Various List Lengths')
-plt.xlabel('List Length')
+plt.plot(range(1, 11), execution_times, marker='o')
+plt.title('Cocktail Shaker Sort Execution Time for Various Lists')
+plt.xlabel('List Number')
 plt.ylabel('Execution Time (seconds)')
 plt.grid(True)
 plt.show()
